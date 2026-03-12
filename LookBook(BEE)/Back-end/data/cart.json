@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Casual Shirt",
+    "price": "₹700",
+    "image": "https://i.pinimg.com/1200x/74/f2/d6/74f2d619cb9cc850e0dc4914d48f4a63.jpg",
+    "id": 1773220586687,
+    "quantity": 1
+  },
+  {
+    "name": "Jacket",
+    "price": "₹2200",
+    "image": "https://i.pinimg.com/736x/07/c0/78/07c0780f442dffeccfe35d456d83796b.jpg",
+    "id": 1773220592019,
+    "quantity": 1
+  },
+  {
+    "name": "Full Set",
+    "price": "₹2200",
+    "image": "https://i.pinimg.com/1200x/a8/5a/bd/a85abd5ac2bdad796cdc4118cf91cdfa.jpg",
+    "id": 1773220592973,
+    "quantity": 1
+  },
+  {
+    "name": "Bag",
+    "price": "₹700",
+    "image": "https://i.pinimg.com/1200x/66/b1/8b/66b18be5a2cad116503f7d1e1169c8bf.jpg",
+    "id": 1773223908616,
+    "quantity": 2
+  }
+]
