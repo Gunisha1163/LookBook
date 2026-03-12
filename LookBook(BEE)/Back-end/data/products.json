@@ -1,0 +1,114 @@
+{
+  "men": [
+    {
+      "id": 1,
+      "title": "Casual Outfit",
+      "mainImage": "https://i.pinimg.com/736x/01/14/ac/0114ac8082112da2e1efc45c389a8e9a.jpg",
+      "items": [
+        {
+          "name": "Casual Shirt",
+          "price": 700,
+          "image": "https://i.pinimg.com/1200x/74/f2/d6/74f2d619cb9cc850e0dc4914d48f4a63.jpg"
+        },
+        {
+          "name": "Slim Fit Jeans",
+          "price": 1300,
+          "image": "https://i.pinimg.com/1200x/cd/08/c5/cd08c5c4b5b752e6f953238932966e65.jpg"
+        },
+        {
+          "name": "Casual Sneakers",
+          "price": 1800,
+          "image": "https://i.pinimg.com/1200x/9f/88/ed/9f88ed7ff1d76ed10931c6890d3d52a5.jpg"
+        },
+        {
+          "name": "Classic Sunglasses",
+          "price": 300,
+          "image": "https://i.pinimg.com/736x/4a/37/58/4a3758eb3db54a07a44d307a6860d8f6.jpg"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Winter Vibe",
+      "mainImage": "https://i.pinimg.com/736x/16/d3/52/16d35237094354aafc45381c911157e2.jpg",
+      "items": [
+        {
+          "name": "Hoodie",
+          "price": 1200,
+          "image": "https://i.pinimg.com/1200x/b3/56/6c/b3566c327d7e64bbda1896959b040a4e.jpg"
+        },
+        {
+          "name": "Jacket",
+          "price": 2200,
+          "image": "https://i.pinimg.com/736x/07/c0/78/07c0780f442dffeccfe35d456d83796b.jpg"
+        },
+        {
+          "name": "Jean",
+          "price": 1500,
+          "image": "https://i.pinimg.com/1200x/84/0b/5d/840b5d70755e5137601e72a3fa417df7.jpg"
+        },
+        {
+          "name": "Shoes",
+          "price": 1700,
+          "image": "https://i.pinimg.com/736x/71/ea/35/71ea35dbd54ff1f524e8bbc5b6176239.jpg"
+        }
+      ]
+    }
+  ],
+  "women": [
+    {
+      "id": 1,
+      "title": "Denim Daze",
+      "mainImage": "https://i.pinimg.com/736x/0c/d6/da/0cd6da96abcf5855940ffb2b8d1fd0b7.jpg",
+      "items": [
+        {
+          "name": "Top",
+          "price": 900,
+          "image": "https://i.pinimg.com/736x/33/1f/54/331f54a22fa3136ce5b9311fb7ad7ef8.jpg"
+        },
+        {
+          "name": "Bottom",
+          "price": 1300,
+          "image": "https://i.pinimg.com/1200x/76/f4/4d/76f44deb623dc2f08b8ad09ac883cfaf.jpg"
+        },
+        {
+          "name": "Bag",
+          "price": 600,
+          "image": "https://i.pinimg.com/1200x/b5/01/b8/b501b8c4bfe0d5ccbc33ec8a6af35466.jpg"
+        },
+        {
+          "name": "Belt",
+          "price": 250,
+          "image": "https://i.pinimg.com/1200x/82/30/a5/8230a5a7c4b50b65c29b562c2e29b125.jpg"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Crimson Hour",
+      "mainImage": "https://i.pinimg.com/1200x/a8/5a/bd/a85abd5ac2bdad796cdc4118cf91cdfa.jpg",
+      "items": [
+        {
+          "name": "Full Set",
+          "price": 2200,
+          "image": "https://i.pinimg.com/1200x/a8/5a/bd/a85abd5ac2bdad796cdc4118cf91cdfa.jpg"
+        },
+        {
+          "name": "Bag",
+          "price": 700,
+          "image": "https://i.pinimg.com/1200x/66/b1/8b/66b18be5a2cad116503f7d1e1169c8bf.jpg"
+        },
+        {
+          "name": "Earrings",
+          "price": 300,
+          "image": "https://i.pinimg.com/736x/eb/68/b8/eb68b8440be836d69c1fafc1385fcc25.jpg"
+        },
+        {
+          "name": "Accessory",
+          "price": 150,
+          "image": "https://i.pinimg.com/736x/71/5e/15/715e15d9b69f9c8274ebcc918b96c6a5.jpg"
+        }
+      ]
+    }
+  ]
+}

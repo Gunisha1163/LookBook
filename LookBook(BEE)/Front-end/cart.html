@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Cart</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: #fdfaf6;
+      color: #4b3f35;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .table-container {
+      padding: 40px 50px;
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+    }
+    th, td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+    th {
+      background-color: #f3c6c0;
+      color: #fff;
+    }
+    button.remove-btn {
+      background-color: #f59b91;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    button.remove-btn:hover {
+      background-color: #e5736d;
+      transform: scale(1.05);
+    }
+    td img {
+      width: 80px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .cart-summary {
+      max-width: 400px;
+      margin: 30px auto;
+      padding: 25px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #eee;
+    }
+    .summary-row:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+    .summary-row.total {
+      font-weight: bold;
+      font-size: 1.2em;
+      border-top: 2px solid #f4c7c3;
+      padding-top: 12px;
+      margin-top: 12px;
+    }
+    .summary-label {
+      color: #666;
+    }
+    .summary-value {
+      font-weight: 500;
+    }
+    .item-count {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #666;
+      font-size: 1.1em;
+    }
+    .place-order-btn {
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 30px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 77, 148, 0.3);
+      margin-top: 20px;
+    }
+    .place-order-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(255, 77, 148, 0.4);
+    }
+
+    /* MEDIA QUERIES */
+    @media (max-width: 767.98px) {
+      table {
+        width: 95%;
+      }      
+      th, td {
+        padding: 10px;
+      }      
+      th {
+        font-size: 16px;
+      }      
+      td img {
+        width: 60px;
+        height: 80px;
+      }      
+      .cart-summary {
+        max-width: 350px;
+        padding: 20px;
+      }      
+      .item-count {
+        font-size: 1em;
+      }      
+      h1 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+      }
+    }
+    @media (max-width: 575.98px) {
+      table {
+        width: 100%;
+        font-size: 14px;
+      }      
+      th, td {
+        padding: 8px 5px;
+      }      
+      th {
+        font-size: 14px;
+        padding: 10px 5px;
+      }      
+      td img {
+        width: 50px;
+        height: 65px;
+      }      
+      .cart-summary {
+        max-width: 300px;
+        padding: 15px;
+        margin: 20px auto;
+      }
+      .summary-row {
+        font-size: 14px;
+      }
+      .summary-row.total {
+        font-size: 1.1em;
+      }
+      .item-count {
+        font-size: 0.95em;
+        margin-bottom: 15px;
+      }
+      h1 {
+        font-size: 1.6rem;
+        margin-bottom: 15px;
+        padding: 0 10px;
+      }
+      .place-order-btn {
+        padding: 10px 25px;
+        font-size: 14px;
+      }
+      th:nth-child(3),
+      td:nth-child(3) {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar-placeholder"></div>
+
+  <div class="table-container">
+    <h1>Your Shopping Cart</h1>
+    <div class="item-count" id="cart-item-count">0 items</div>
+    <table id="cartTable">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Item</th>
+          <th>Unit Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody id="cart-table-body"></tbody>
+    </table>
+    <div id="cart-totals" class="cart-summary" style="display: none;">
+      <div class="summary-row">
+        <span class="summary-label">Subtotal:</span>
+        <span class="summary-value" id="cart-subtotal">₹0.00</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-label">Tax (2%):</span>
+        <span class="summary-value" id="cart-tax">₹0.00</span>
+      </div>
+      <div class="summary-row total">
+        <span class="summary-label">Grand Total:</span>
+        <span class="summary-value" id="cart-grand-total">₹0.00</span>
+      </div>
+    </div>
+    <div style="text-align: center; margin-top: 30px;">
+      <button class="place-order-btn" onclick="window.location.href='payment.html'">Place Order</button>
+    </div>
+  </div>
+
+  <script src="/js/script.js"></script>
+</body>
+</html>

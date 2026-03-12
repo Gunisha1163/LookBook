@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>About Us</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        :root {
+            --primary: #ff4d94;
+            --secondary: #6a11cb;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+        }
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 77, 148, 0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 77, 148, 0.4);
+        }
+        .btn-outline {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* hero section */
+        .hero{
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            position: relative;
+            width: 100%;
+            height: 70vh;
+            overflow: hidden;
+        }
+        .about-image img{
+            width: 100%;
+           height: 100%;
+            object-fit: cover;
+        }
+        .hero .container {
+            position: absolute;
+           top: 50%;
+           left: 50%;
+           transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+           margin-bottom: 1rem;
+           color: #000;
+        }
+        .hero p {
+            font-size: 1.2rem;
+           color: #666;
+           max-width: 600px;
+           margin: auto;
+        }
+
+        /* About Sections */
+        .section {            
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            padding: 80px 0;
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .about-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #000;
+        }
+        .about-content p {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        .about-image {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        .about-image img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+        .section-alt {
+            background: #f8f9fa;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            color: #000;
+        }
+        .section-header p {
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Team Section */
+        .team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+}
+        .team-member {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .team-member:hover {
+            transform: translateY(-5px);
+        }
+        .team-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            overflow: hidden;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .team-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .team-member h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #000;
+        }   
+        .team-member p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        /* Values Section */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .value-card {
+            text-align: center;
+            padding: 2rem;
+        }
+        .value-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .value-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #000;
+        }
+        .value-card p {
+            color: #666;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            bottom: 0;
+            left: 0;
+        }
+        .footer-links {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        .footer-links a {
+            transition: all 0.3s ease;
+            color: #b3b3b3;
+        }
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .social-links a:hover {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            transform: translateY(-5px);
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #b3b3b3;
+            font-size: 14px;
+        }
+
+        /* MEDIA QUERIES */
+        @media (max-width: 1199.98px) {
+            .container {
+                max-width: 960px;
+            }
+        }
+        @media (max-width: 991.98px) {
+            .container {
+                max-width: 720px;
+            }
+            .hero {
+                height: 60vh;
+            }
+            .hero h1 {
+                font-size: 3rem;
+            }
+            .hero p {
+                font-size: 1.1rem;
+            }
+            .about-grid {
+                gap: 3rem;
+            }
+            .section {
+                padding: 60px 0;
+            }
+            .section-header h2 {
+                font-size: 2.2rem;
+            }
+        }
+        @media (max-width: 767.98px) {
+            .container {
+                max-width: 540px;
+            }
+            .hero {
+                height: 50vh;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .hero p {
+                font-size: 1rem;
+                padding: 0 15px;
+            }
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+            .about-content h3 {
+                font-size: 1.6rem;
+            }
+            .section {
+                padding: 50px 0;
+            }
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            .section-header p {
+                padding: 0 15px;
+            }            
+            .team-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }            
+            .team-member {
+                padding: 1.5rem;
+            }            
+            .values-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }            
+            .value-card {
+                padding: 1.5rem;
+            }            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+        }
+        @media (max-width: 575.98px) {
+            .container {
+                padding: 0 15px;
+            }            
+            .hero {
+                height: 40vh;
+            }            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero p {
+                font-size: 0.9rem;
+            }
+            .about-grid {
+                gap: 2rem;
+            }
+            .about-content h3 {
+                font-size: 1.4rem;
+            }
+            .about-content p {
+                font-size: 0.95rem;
+            }
+            .section {
+                padding: 40px 0;
+            }
+            .section-header h2 {
+                font-size: 1.8rem;
+            }
+            .section-header p {
+                font-size: 0.95rem;
+            }
+            .team-grid {
+                gap: 1.25rem;
+            }
+            .team-member {
+                padding: 1.25rem;
+            }
+            .team-image {
+                width: 100px;
+                height: 100px;
+            }
+            .team-member h4 {
+                font-size: 1.2rem;
+            }
+            .values-grid {
+                grid-template-columns: 1fr;
+                gap: 1.25rem;
+            }
+            .value-card {
+                padding: 1.25rem;
+            }
+            .value-icon {
+                font-size: 2rem;
+            }
+            .value-card h4 {
+                font-size: 1.2rem;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            .footer-column h3 {
+                font-size: 18px;
+                margin-bottom: 20px;
+            }
+            .social-links {
+                justify-content: center;
+            }
+            .btn {
+                padding: 10px 25px;
+                font-size: 0.9rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div id="navbar-placeholder"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="about-image">
+            <img src="aboutus.png" alt="Sustainable fashion production process showing eco-friendly materials and ethical manufacturing">
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <h3>Where Style Meets Substance</h3>
+                    <p>Founded in 2025, lookbook emerged from a simple yet powerful idea: fashion should be accessible, sustainable, and empowering. We believe that what you wear is an extension of who you are, and we're committed to helping you express your unique identity through curated, high-quality fashion.</p>
+                    <p>At Lookbook, we believe in fashion with purpose. Every collection is designed with creativity, sustainability, and inclusivity at its core. From eco-friendly fabrics to timeless silhouettes, our pieces are crafted to inspire confidence and celebrate individuality.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDCO9wa-SoLnmtUaRKlm4XDFcNwVtL3EYUXg&s" alt="Modern fashion studio workspace with design boards, fabric samples, and minimalist decor in Milan">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="section section-alt">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Mission</h2>
+                <p>Redefining fashion through innovation, sustainability, and inclusivity</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-image">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/cd829aad-0097-466a-accd-dad28baa98f4.png" alt="Sustainable fashion production process showing eco-friendly materials and ethical manufacturing">
+                </div>
+                <div class="about-content">
+                    <h3>Fashion with Purpose</h3>
+                    <p>At lookbook, we're not just creating clothing – we're building a movement. Our mission is to make sustainable fashion the norm, not the exception. We carefully select materials, partner with ethical manufacturers, and design pieces that stand the test of time.</p>
+                    <p>We're committed to transparency in our supply chain, fair labor practices, and reducing our environmental footprint. Every piece in our collection tells a story of craftsmanship, quality, and conscious design.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Meet Our Team</h2>
+                <p>The creative minds behind lookbook's vision</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="team-image">
+                        <img src="Gunisha.jpeg" alt="Gunisha">
+                    </div>
+                    <h4>Gunisha Modi</h4>
+                    <p>Creative Director</p>
+                    <p>Leads the overall visual style, design page layouts and develops the website interface using HTML, CSS, JavaScript and React, Node.js and Express.</p>
+                </div>
+                <div class="team-member">
+                    <div class="team-image">
+                        <img src="Gurleen.jpeg" alt="Gurleen">
+                    </div>
+                    <h4>Gurleen Saini</h4>
+                    <p>Head of Design</p>
+                    <p>Designs user experience flows, creates aesthetic visuals and develops the website interface using HTML, CSS, JavaScript and React, Node.js and Express.</p>
+                </div>
+                <div class="team-member">
+                    <div class="team-image">
+                        <img src="Kaavya.jpeg" alt="Kaavya">
+                    </div>
+                    <h4>Kaavya Minhas</h4>
+                    <p>Quality Analyst</p>
+                    <p>Builds responsive components, test the website for errors, layout issues and develops the website interface using HTML, CSS, JavaScript, React, Node.js and express.</p>
+                </div>
+                <div class="team-member">
+                    <div class="team-image">
+                        <img src="Gurleen.jpeg" alt="Kashish">
+                    </div>
+                    <h4>Kashish</h4>
+                    <p>Head of AI & Recommendation </p>
+                    <p>Builds and manages the server-side logic of the website, develops APIs using Node.js and Express.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="section section-alt">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Values</h2>
+                <p>The principles that guide everything we do</p>
+            </div>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">♻</div>
+                    <h4>Sustainability</h4>
+                    <p>We prioritize eco-friendly materials and processes to minimize our environmental impact</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">✨</div>
+                    <h4>Quality</h4>
+                    <p>Every piece is crafted with attention to detail and built to last beyond seasons</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <h4>Inclusivity</h4>
+                    <p>We celebrate diversity and design for all body types, ages, and personal styles</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">💡</div>
+                    <h4>Innovation</h4>
+                    <p>Constantly pushing boundaries with new techniques, materials, and design concepts</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>LookBook</h3>
+                    <p>Redefining fashion with style and elegance. Discover your unique look with our exclusive collections.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="homepage.html">Home</a></li>
+                        <li><a href="aboutus.html">About Us</a></li>
+                        <li><a href="men.html">Collections</a></li>
+                        <li><a href="women.html">New Arrivals</a></li>
+                        <li><a href="#">Sale</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul class="footer-links">
+                        <li><a href="help.html">Contact Us</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                        <li><a href="help.html">FAQs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> Punjab, India</li>
+                        <li><i class="fas fa-phone"></i> +91 XXXXXXXX85</li>
+                        <li><i class="fas fa-envelope"></i> info@lookbook.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 LookBook. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    // Dynamically load navbar.html
+    fetch("/navbar.html")
+        .then(response => response.text())
+        .then(data => {
+            // 1. Insert the HTML content
+            document.getElementById("navbar-placeholder").innerHTML = data;
+
+            // 2. Extract and execute the script from the loaded content (CRITICAL)
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, 'text/html');
+            const scriptElement = doc.querySelector('script');
+            
+            if (scriptElement) {
+                const newScript = document.createElement('script');
+                newScript.textContent = scriptElement.textContent;
+                document.body.appendChild(newScript);
+            }
+            
+            // Reattach existing JS functionality (like toggle menu)
+            const menuToggle = document.querySelector('.menu-toggle');
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    document.querySelector('.nav-links').classList.toggle('active');
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error loading navbar:', error);
+            // Fallback: Create a simple navbar if fetch fails
+            document.getElementById("navbar-placeholder").innerHTML = `
+                <header>
+                    <div class="container">
+                        <nav class="navbar">
+                            <div class="logo-group">
+                                <i class="fas fa-arrow-left back-button" onclick="window.history.back()"></i>
+                                <a href="homepage1.html" class="logo">LookBook</a>
+                            </div>
+                            <div class="nav-links">
+                                <a href="homepage.html">Home</a>
+                                <a href="credentials.html">Survey</a>
+                                <a href="aboutus.html">About Us</a>
+                                <a href="#">Contact</a>
+                            </div>
+                            <div class="navbar-actions">
+                                <div class="auth-buttons">
+                                    <a href="login.html" class="btn btn-outline">Log In</a>
+                                    <a href="signup.html" class="btn btn-primary">Sign Up</a>
+                                </div>
+                            </div>
+                            <div class="menu-toggle">
+                                <i class="fas fa-bars"></i>
+                            </div>
+                        </nav>
+                    </div>
+                </header>
+            `;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Help Center | LookBook</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Global */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      text-decoration: none;
+    }
+    :root {
+      --primary: #ff4d94;
+      --secondary: #6a11cb;
+      --dark: #1a1a2e;
+      --light: #f8f9fa;
+      --gray: #6c757d;
+      --accent-pink: #f28ca0; 
+    }
+    body {
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      border: none;
+    }
+    .btn-primary {
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      color: white;
+      box-shadow: 0 4px 15px rgba(255, 77, 148, 0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(255, 77, 148, 0.4);
+    }
+
+    /* Hero Styles */
+    .help-hero {
+      background-color: var(--dark);
+      color: white;
+      padding: 60px 0;
+      text-align: center;
+    }
+    .help-hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    .help-hero p {
+      color: #ddd;
+      font-size: 1.1rem;
+    }
+    
+    /* FAQ Section Styles */
+    .faq-section {
+      padding: 60px 0;
+      text-align: center;
+    }
+    .faq-section h2 {
+      font-size: 2rem;
+      margin-bottom: 40px;
+      position: relative;
+      display: inline-block;
+    }
+    .faq-section h2:after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 3px;
+      background: var(--primary);
+      bottom: -10px;
+      left: 0;
+    }
+    .accordion-item {
+      margin-bottom: 20px;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      text-align: left;
+    }
+    .accordion-header {
+      padding: 20px 25px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      font-size: 1.1rem;
+      background-color: #ffffff;
+      border-bottom: 1px solid #eee;
+      transition: background-color 0.3s;
+    }
+    .accordion-header:hover {
+      background-color: #fcfcfc;
+    }
+    .accordion-header.active {
+      color: var(--primary);
+      background-color: #fff6f7;
+    }
+    .accordion-header i {
+      font-size: 1rem;
+      color: var(--primary);
+      transition: transform 0.3s ease;
+    }
+    .accordion-header.active i {
+      transform: rotate(180deg);
+    }
+    .accordion-content {
+      padding: 0 25px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+      background-color: #fff;
+    }
+    .accordion-content p {
+      padding: 15px 0 20px 0;
+      color: #555;
+    }
+    
+    /* Styles for content when visible (handled by JS) */
+    .accordion-content.open {
+        max-height: 500px;
+    }
+
+    /* Contact Section Styles */
+    .contact-section {
+      padding: 60px 0;
+      background-color: #f7f7f7;
+    }
+    .contact-section h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 40px;
+    }
+    .contact-grid {
+      display: flex;
+      justify-content: space-around;
+      gap: 30px;
+      text-align: center;
+    }
+    .contact-card {
+      flex: 1;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s;
+    }
+    .contact-card:hover {
+      transform: translateY(-5px);
+    }
+    .contact-card i {
+      font-size: 30px;
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+    .contact-card h3 {
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+      color: var(--dark);
+    }
+    .contact-card p, .contact-card a {
+      font-size: 0.95rem;
+      color: var(--gray);
+    }
+    .contact-card a {
+      display: block;
+      text-decoration: none;
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--dark);
+      color: white;
+      padding: 60px 0 20px;
+    }
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    .footer-column h3 {
+      font-size: 20px;
+      margin-bottom: 25px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    .footer-column h3:after {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 3px;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      bottom: 0;
+      left: 0;
+    }
+    .footer-links {
+      list-style: none;
+    }
+    .footer-links li {
+      margin-bottom: 12px;
+    }
+    .footer-links a {
+      transition: all 0.3s ease;
+      color: #b3b3b3;
+      text-decoration: none;
+    }
+    .footer-links a:hover {
+      color: white;
+      padding-left: 5px;
+    }
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    .social-links a:hover {
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      transform: translateY(-5px);
+    }
+    .footer-bottom {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: #b3b3b3;
+      font-size: 14px;
+    }
+
+    /* Media Queries */
+    @media (max-width: 768px) {
+      .contact-grid {
+        flex-direction: column;
+      }      
+      .help-hero h1 {
+        font-size: 2rem;
+      }      
+      .faq-section h2, .contact-section h2 {
+        font-size: 1.7rem;
+      }      
+      .accordion-header {
+        padding: 15px 20px;
+        font-size: 1rem;
+      }      
+      .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+      }
+    }    
+    @media (max-width: 576px) {
+      .help-hero {
+        padding: 40px 0;
+      }      
+      .help-hero h1 {
+        font-size: 1.7rem;
+      }      
+      .help-hero p {
+        font-size: 1rem;
+      }      
+      .faq-section, .contact-section {
+        padding: 40px 0;
+      }      
+      .faq-section h2, .contact-section h2 {
+        font-size: 1.5rem;
+      }      
+      .contact-card {
+        padding: 20px;
+      }      
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }      
+      .footer-column h3 {
+        font-size: 18px;
+        margin-bottom: 20px;
+      }      
+      .social-links {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar-placeholder"></div>
+
+  <section class="help-hero">
+    <div class="container">
+      <h1>How Can We Help You?</h1>
+      <p>Your guide to shopping, returns, sizing, and more at LookBook.</p>
+    </div>
+  </section>
+
+  <section class="faq-section">
+    <div class="container">
+      <h2>Frequently Asked Questions</h2>
+      <div class="accordion-list">
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <span>What is your return policy?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="accordion-content">
+            <p>We offer free returns within 30 days of purchase for all items, provided they are unworn, unwashed, and have all original tags attached. Final sale items are excluded.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <span>How do I track my order?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="accordion-content">
+            <p>Once your order ships, you will receive an email confirmation with a tracking number and a link to the carrier's website. You can also view the tracking status in your "Orders" section when logged in.</p>
+          </div>
+        </div>        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <span>Do you offer international shipping?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="accordion-content">
+            <p>Yes, we ship to over 50 countries worldwide. Shipping costs and delivery times are calculated at checkout based on your location.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-header">
+              <span>How do I find my correct size?</span>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+              <p>Please refer to our detailed Size Guide linked at the bottom of the page. You'll find specific measurements for various garments to help you select the perfect fit.</p>
+            </div>
+          </div>          
+        <div class="accordion-item">
+            <div class="accordion-header">
+              <span>What payment methods do you accept?</span>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+              <p>We accept Visa, MasterCard, American Express, PayPal, and Google Pay. All transactions are secure and encrypted.</p>
+            </div>
+          </div>        
+      </div>
+    </div>
+  </section>
+  
+  <section class="contact-section">
+    <div class="container">
+        <h2>Can't Find Your Answer? Get in Touch.</h2>
+        <div class="contact-grid">
+            <div class="contact-card">
+                <i class="fas fa-envelope"></i>
+                <h3>Email Support</h3>
+                <p>For order or general inquiries.</p>
+                <a href="mailto:support@lookbook.com">support@lookbook.com</a>
+            </div>
+            <div class="contact-card">
+                <i class="fas fa-phone"></i>
+                <h3>Call Center</h3>
+                <p>Mon - Fri: 9:00 AM - 5:00 PM (PST)</p>
+                <a href="tel:+919999999999">+91 XXXXXXXX85</a>
+            </div>
+            <div class="contact-card">
+                <i class="fas fa-comment-alt"></i>
+                <h3>Live Chat</h3>
+                <p>Instant support from our fashion specialists.</p>
+                <button class="btn btn-primary" onclick="alert('Live Chat functionality is not yet implemented.')">Start Chat</button>
+            </div>
+        </div>
+    </div>
+  </section>
+
+  <!-- Updated Footer to match other pages -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>LookBook</h3>
+          <p>Redefining fashion with style and elegance. Discover your unique look with our exclusive collections.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-pinterest"></i></a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="homepage.html">Home</a></li>
+            <li><a href="aboutus.html">About Us</a></li>
+            <li><a href="men.html">Collections</a></li>
+            <li><a href="women.html">New Arrivals</a></li>
+            <li><a href="#">Sale</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Customer Service</h3>
+          <ul class="footer-links">
+            <li><a href="help.html">Contact Us</a></li>
+            <li><a href="#">Shipping Policy</a></li>
+            <li><a href="#">Return Policy</a></li>
+            <li><a href="#">Size Guide</a></li>
+            <li><a href="help.html">FAQs</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Contact Info</h3>
+          <ul class="footer-links">
+            <li><i class="fas fa-map-marker-alt"></i> Punjab, India</li>
+            <li><i class="fas fa-phone"></i> +91 XXXXXXXX85</li>
+            <li><i class="fas fa-envelope"></i> info@lookbook.com</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 LookBook. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // 1. Dynamic NavBar Loader
+    fetch("/navbar.html")
+      .then(response => response.text())
+      .then(data => {
+        // 1. Insert the HTML content of the navbar
+        document.getElementById("navbar-placeholder").innerHTML = data;
+        // 2. Extract and manually execute the script from the loaded content
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(data, 'text/html');
+        const scriptElement = doc.querySelector('script');
+        if (scriptElement) {
+          const newScript = document.createElement('script');
+          newScript.textContent = scriptElement.textContent;
+          document.body.appendChild(newScript);
+        }
+      });
+
+    // 2. FAQ Accordion Logic
+    document.addEventListener("DOMContentLoaded", () => {
+      const headers = document.querySelectorAll(".accordion-header");
+      headers.forEach(header => {
+        header.addEventListener("click", function() {
+          const content = this.nextElementSibling;
+          // Close all other open accordion items
+          headers.forEach(h => {
+            if (h !== this && h.classList.contains("active")) {
+              h.classList.remove("active");
+              h.nextElementSibling.classList.remove("open");
+              h.nextElementSibling.style.maxHeight = null;
+            }
+          });
+          // Toggle the current item
+          this.classList.toggle("active");
+          content.classList.toggle("open");
+          if (content.classList.contains("open")) {
+            // Set the max-height to the actual scroll height for smooth animation
+            content.style.maxHeight = content.scrollHeight + "px";
+          } else {
+            content.style.maxHeight = null;
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

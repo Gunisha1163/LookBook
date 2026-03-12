@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log-In</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      display: flex;
+      height: 100vh;
+      background: #f8f8f8;
+    }
+
+    /* Left section */
+    .left {
+      flex: 1;
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .left h2 {
+      font-size: 14px;
+      letter-spacing: 2px;
+      color: #555;
+    }
+    .left h1 {
+      font-size: 32px;
+      line-height: 1.4;
+    }
+    .left h1 span {
+      color: #c57b57;
+      font-weight: bold;
+    }
+    .left p {
+      color: #444;
+    }
+    .create-link {
+      font-size: 14px;
+    }
+    .create-link a {
+      text-decoration: none;
+      font-weight: bold;
+      color: #000;
+      border-bottom: 1px solid #000;
+    }
+
+    /* Right section */
+    .right {
+      flex: 2;
+      background: url("login.jpg") no-repeat center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    /* Login card */
+    .login-card {
+      background: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      width: 300px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+    .login-card h3 {
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .login-card label {
+      display: block;
+      margin: 10px 0 5px;
+      font-size: 14px;
+      color: #444;
+    }
+    .login-card input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      box-sizing: border-box;
+    }
+    .options {
+      font-size: 12px;
+      margin: 10px 0;
+    }
+    .options a {
+      text-decoration: none;
+      color: #555;
+    }
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      background: #000;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .login-btn:hover {
+      background: #333;
+    }
+
+    /* Media Queries */
+    @media screen and (max-width: 768px) {
+      body {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+      }      
+      .left {
+        flex: none;
+        padding: 40px 30px;
+        text-align: center;
+      }      
+      .left h1 {
+        font-size: 28px;
+      }      
+      .right {
+        flex: none;
+        height: 400px;
+        width: 100%;
+      }      
+      .login-card {
+        width: 280px;
+        padding: 25px;
+      }
+    }
+    @media screen and (max-width: 480px) {
+      .left {
+        padding: 30px 20px;
+      }      
+      .left h1 {
+        font-size: 24px;
+      }      
+      .left h2 {
+        font-size: 12px;
+      }      
+      .right {
+        height: 350px;
+      }      
+      .login-card {
+        width: 85%;
+        max-width: 280px;
+        padding: 20px;
+      }      
+      .login-card h3 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Left side -->
+  <div class="left">
+    <h2>LARGEST FASHION STORE</h2>
+    <h1>OFFERS POWERED <br> BY <span>DESIGNERS</span><br> AROUND THE WORLD.</h1>
+    <p>Don't have an account?</p>
+    <div class="create-link">
+      <a href="signup.html">Create account →</a>
+    </div>
+  </div>
+
+  <!-- Right side -->
+  <div class="right">
+    <div class="login-card">
+      <h3>Login</h3>
+      <form id="loginForm">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Enter your password" required>
+        <div class="options">
+          <a href="#">Forgot your password?</a>
+        </div>
+        <button type="submit" class="login-btn">Login</button>
+      </form>
+    </div>
+  </div>
+<script>
+  document.getElementById("loginForm").addEventListener("submit", async function (e) {
+  e.preventDefault();
+
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+
+  try {
+    const res = await fetch("/api/users/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+
+      localStorage.setItem("userSession", JSON.stringify({
+        email: data.user.email,
+        username: data.user.name
+      }));
+
+      localStorage.setItem("userData", JSON.stringify(data.user));
+
+      alert("Login successful!");
+
+      window.location.href = "homepage.html";
+
+    } else {
+      alert(data.message);
+    }
+
+  } catch (err) {
+    alert("Server error: " + err.message);
+  }
+});
+</script>
+</body>
+</html>

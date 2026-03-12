@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Payment Method</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff4d94;
+            --secondary: #6a11cb;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            min-height: 100vh;
+        }        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* PAYMENT PAGE STYLES */        
+        .payment-container {
+            width: 90%;
+            max-width: 600px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin: 50px auto 50px auto; 
+        }
+        h2 {
+            text-align: center;
+            color: var(--dark);
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        .payment-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .payment-option-card {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }        
+        .payment-option-card.selected {
+            border-color: var(--primary);
+            box-shadow: 0 2px 10px rgba(255, 77, 148, 0.2);
+            background-color: #fff0f5; 
+        }        
+        .payment-input {
+            display: none; 
+        }        
+        .payment-icon {
+            font-size: 24px;
+            margin-right: 15px;
+            color: var(--gray);
+            width: 30px;
+            text-align: center;
+        }        
+        .payment-label {
+            flex-grow: 1;
+            font-weight: 500;
+        }        
+        .custom-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
+            transition: all 0.3s ease;
+        }        
+        .custom-radio::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }        
+        .payment-input:checked + .payment-option-card .custom-radio {
+            border-color: var(--primary);
+        }        
+        .payment-input:checked + .payment-option-card .custom-radio::after {
+            opacity: 1;
+        }
+
+        /* Order Summary Section */
+        .order-summary-section {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        .order-summary-section h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-weight: 600;
+        }
+        .order-summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .order-summary-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        .order-items-list {
+            margin: 15px 0;
+        }
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+        .item-name {
+            flex-grow: 1;
+        }
+        .item-quantity {
+            margin: 0 10px;
+            color: var(--gray);
+        }
+        .item-price {
+            font-weight: 500;
+        }
+
+        /* Buttons */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: none;
+            font-size: 16px;
+        }
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 77, 148, 0.4);
+            margin-top: 20px;
+        }        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 77, 148, 0.5);
+        }
+        
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            .payment-container {
+                padding: 30px 20px;
+                margin: 20px auto;
+            }
+        }        
+        @media (max-width: 480px) {
+            .payment-container {
+                padding: 20px 15px;
+                margin: 15px auto;
+            }            
+            .payment-option-card {
+                padding: 12px;
+            }            
+            .payment-icon {
+                font-size: 20px;
+                margin-right: 12px;
+            }            
+            .order-summary-section {
+                padding: 15px;
+            }
+            .order-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .item-quantity, .item-price {
+                margin-left: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <div class="payment-container">
+        <h2>Choose Your Payment Method</h2>
+        <!-- Order Summary Section -->
+        <div class="order-summary-section">
+            <h3>Order Summary</h3>
+            <div id="order-summary-details"></div>
+        </div>
+
+        <form id="paymentForm">
+            <div class="payment-options">
+                <label>
+                    <input type="radio" name="paymentMethod" value="Card" class="payment-input" id="radioCard">
+                    <div class="payment-option-card">
+                        <i class="fas fa-credit-card payment-icon"></i>
+                        <span class="payment-label">Credit or Debit Card</span>
+                        <div class="custom-radio"></div>
+                    </div>
+                </label>
+                <label>
+                    <input type="radio" name="paymentMethod" value="PayPal" class="payment-input" id="radioPayPal">
+                    <div class="payment-option-card">
+                        <i class="fab fa-paypal payment-icon"></i>
+                        <span class="payment-label">PayPal</span>
+                        <div class="custom-radio"></div>
+                    </div>
+                </label>
+                <label>
+                    <input type="radio" name="paymentMethod" value="COD" class="payment-input" id="radioCOD" checked>
+                    <div class="payment-option-card selected">
+                        <i class="fas fa-money-bill-wave payment-icon"></i>
+                        <span class="payment-label">Cash on Delivery (COD)</span>
+                        <div class="custom-radio"></div>
+                    </div>
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+        </form>
+    </div>
+    
+    <script>
+    const CART_KEY = 'cartItems';
+    const TOTALS_KEY = 'cartTotals';
+
+    // Dynamically load navbar.html into every page
+    fetch("/navbar.html")
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById("navbar-placeholder").innerHTML = data;
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(data, 'text/html');
+        const scriptElement = doc.querySelector('script');
+        if (scriptElement) {
+            const newScript = document.createElement('script');
+            newScript.textContent = scriptElement.textContent;
+            document.body.appendChild(newScript);
+        }
+        const menuToggle = document.querySelector('.menu-toggle');
+        if (menuToggle) {
+            menuToggle.addEventListener('click', function() {
+                document.querySelector('.nav-links').classList.toggle('active');
+            });
+        }
+    });
+
+    // Helper functions
+    function getItems(key) {
+        const items = localStorage.getItem(key);
+        return items ? JSON.parse(items) : [];
+    }
+
+    function formatPrice(amount) {
+        return '₹' + amount.toFixed(0);
+    }
+
+    function parsePrice(priceString) {
+        if (!priceString) return 0;
+        return parseFloat(priceString.replace(/[₹,]/g, ''));
+    }
+
+    // PAYMENT FORM LOGIC 
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('paymentForm');
+        const options = document.querySelectorAll('.payment-input');
+        const cards = document.querySelectorAll('.payment-option-card');
+        
+        // Check if cart is empty and redirect if needed - USING CART_KEY
+        const cartItems = getItems(CART_KEY);
+        if (cartItems.length === 0) {
+            alert('Your cart is empty. Please add items to your cart first.');
+            window.location.href = 'cart.html';
+            return;
+        }
+        
+        // Display order summary immediately
+        displayOrderSummary();
+
+        // Highlight the selected card
+        options.forEach(radio => {
+            radio.addEventListener('change', () => {
+                cards.forEach(card => card.classList.remove('selected'));
+                if(radio.checked) {
+                    radio.nextElementSibling.classList.add('selected');
+                }
+            });
+        });
+
+        // Handle form submission
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();            
+            const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked');            
+            if (!selectedMethod) {
+                alert("Please select a payment method to proceed.");
+                return;
+            }            
+            const paymentType = selectedMethod.value;
+            
+            // Store payment method in localStorage
+            localStorage.setItem('selectedPaymentMethod', paymentType);
+
+            // Check if payment method is COD
+            if (paymentType === 'COD') {
+                // Create a new order
+                if (createNewOrder()) {
+                    alert("Order placed successfully! Thank you for your purchase.");
+                    window.location.href = "orders.html"; 
+                } else {
+                    alert("There was an error placing your order. Please try again.");
+                }
+            } else {
+                // Show alert for non-COD options
+                alert("Please select Cash on Delivery only. Other payment methods are currently not supported.");
+            }
+        });
+        
+        // Function to display order summary - USING SAVED TOTALS
+        function displayOrderSummary() {
+            const cartItems = getItems(CART_KEY);
+            const savedTotals = localStorage.getItem(TOTALS_KEY);
+            const orderSummaryElement = document.getElementById('order-summary-details');
+            
+            if (cartItems.length === 0) {
+                orderSummaryElement.innerHTML = '<p>Your cart is empty. Please add items to your cart first.</p>';
+                return;
+            }
+            
+            let summaryHTML = '';
+            let subtotal = 0;
+            let tax = 0;
+            let total = 0;
+            let itemCount = 0;
+
+            // Use saved totals if available, otherwise calculate
+            if (savedTotals) {
+                const totals = JSON.parse(savedTotals);
+                subtotal = totals.subtotal || 0;
+                tax = totals.tax || 0;
+                total = totals.grandTotal || 0;
+                itemCount = totals.itemCount || 0;
+            } else {
+                // Calculate manually if no saved totals
+                cartItems.forEach(item => {
+                    const itemPrice = parsePrice(item.price);
+                    const itemQuantity = parseInt(item.quantity) || 1;
+                    const itemTotal = itemPrice * itemQuantity;
+                    subtotal += itemTotal;
+                    itemCount += itemQuantity;
+                });
+                tax = subtotal * 0.02;
+                total = subtotal + tax;
+            }
+            
+            // Add individual items
+            summaryHTML += '<div class="order-items-list">';
+            cartItems.forEach(item => {
+                const itemPrice = parsePrice(item.price);
+                const itemQuantity = parseInt(item.quantity) || 1;
+                const itemTotal = itemPrice * itemQuantity;
+                
+                summaryHTML += `
+                    <div class="order-item">
+                        <span class="item-name">${item.name}</span>
+                        <span class="item-quantity">x${itemQuantity}</span>
+                        <span class="item-price">${formatPrice(itemTotal)}</span>
+                    </div>
+                `;
+            });
+            summaryHTML += '</div>';
+            
+            summaryHTML += `
+                <div class="order-summary-item">
+                    <span>Subtotal (${itemCount} items)</span>
+                    <span>${formatPrice(subtotal)}</span>
+                </div>
+                <div class="order-summary-item">
+                    <span>Tax (2%)</span>
+                    <span>${formatPrice(tax)}</span>
+                </div>
+                <div class="order-summary-total">
+                    <span>Total</span>
+                    <span>${formatPrice(total)}</span>
+                </div>
+            `;
+            
+            orderSummaryElement.innerHTML = summaryHTML;
+        }
+        
+        // Function to create a new order - USING CART_KEY
+        function createNewOrder() {
+            try {
+                // Get existing orders from localStorage or initialize empty array
+                let orders = getItems('userOrders');
+                
+                // Get cart items - USING CART_KEY
+                const cartItems = getItems(CART_KEY);
+                
+                if (cartItems.length === 0) {
+                    console.error("Cart is empty, cannot create order");
+                    return false;
+                }
+                
+                // Get totals from saved totals or calculate
+                const savedTotals = localStorage.getItem(TOTALS_KEY);
+                let subtotal, tax, total, itemCount;
+
+                if (savedTotals) {
+                    const totals = JSON.parse(savedTotals);
+                    subtotal = totals.subtotal || 0;
+                    tax = totals.tax || 0;
+                    total = totals.grandTotal || 0;
+                    itemCount = totals.itemCount || 0;
+                } else {
+                    // Calculate manually
+                    subtotal = 0;
+                    itemCount = 0;
+                    cartItems.forEach(item => {
+                        const itemPrice = parsePrice(item.price);
+                        const itemQuantity = parseInt(item.quantity) || 1;
+                        subtotal += itemPrice * itemQuantity;
+                        itemCount += itemQuantity;
+                    });
+                    tax = subtotal * 0.02;
+                    total = subtotal + tax;
+                }
+                
+                // Create a new order object with proper structure
+                const newOrder = {
+                    id: generateOrderId(),
+                    date: getCurrentDate(),
+                    subtotal: parseFloat(subtotal.toFixed(2)),
+                    tax: parseFloat(tax.toFixed(2)),
+                    total: parseFloat(total.toFixed(2)),
+                    status: 'Processing',
+                    itemCount: itemCount,
+                    items: cartItems.map(item => ({
+                        id: item.id || generateItemId(),
+                        name: item.name,
+                        price: parsePrice(item.price),
+                        quantity: parseInt(item.quantity) || 1,
+                        image: item.image || 'default.jpg'
+                    })),
+                    paymentMethod: localStorage.getItem('selectedPaymentMethod') || 'COD'
+                };
+                
+                console.log('Creating new order:', newOrder);
+                
+                // Add the new order to the beginning of the array
+                orders.unshift(newOrder);
+                
+                // Save updated orders back to localStorage
+                localStorage.setItem('userOrders', JSON.stringify(orders));
+                
+                // Clear the cart and totals after successful order
+                localStorage.removeItem(CART_KEY);
+                localStorage.removeItem(TOTALS_KEY);
+                
+                // Update cart badge if it exists
+                updateCartBadge(0);
+                
+                return true;
+            } catch (error) {
+                console.error('Error creating order:', error);
+                return false;
+            }
+        }
+        
+        // Helper function to generate a unique order ID
+        function generateOrderId() {
+            const timestamp = new Date().getTime();
+            const random = Math.floor(Math.random() * 1000);
+            return `ORD-${timestamp}-${random}`;
+        }
+        
+        // Helper function to generate item ID if missing
+        function generateItemId() {
+            return 'ITEM-' + Math.random().toString(36).substr(2, 9);
+        }
+        
+        // Helper function to get current date in YYYY-MM-DD format
+        function getCurrentDate() {
+            const now = new Date();
+            return now.toISOString().split('T')[0];
+        }
+        
+        // Function to update cart badge
+        function updateCartBadge(count) {
+            const cartBadge = document.querySelector('.cart-badge');
+            if (cartBadge) {
+                cartBadge.textContent = count;
+                if (count === 0) {
+                    cartBadge.style.display = 'none';
+                } else {
+                    cartBadge.style.display = 'flex';
+                }
+            }
+        }
+    });
+    </script>
+</body>
+</html>

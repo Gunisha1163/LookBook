@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Orders | LookBook</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    :root {
+      --primary: #ff4d94;
+      --secondary: #6a11cb;
+      --dark: #1a1a2e;
+      --light: #f8f9fa;
+      --gray: #6c757d;
+      --accent-pink: #f28ca0;
+    }
+    body {
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      border: none;
+      font-size: 0.9rem;
+    }
+    .btn-primary {
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      color: white;
+      box-shadow: 0 4px 10px rgba(255, 77, 148, 0.2);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(255, 77, 148, 0.3);
+    }
+    
+    /* Order Page Layout & Header Styles */
+    .orders-header {
+      padding: 80px 0 40px;
+      text-align: center;
+    }
+    .orders-header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    .orders-header p {
+      color: var(--gray);
+      font-size: 1.1rem;
+    }
+    .orders-list-section {
+        padding: 20px 0 80px;
+    }
+    
+    /* Order Card Styles */
+    .order-card {
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        margin-bottom: 25px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        transition: box-shadow 0.3s ease;
+        border-left: 5px solid var(--accent-pink);
+    }
+    .order-card:hover {
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    }
+    .order-summary {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px dashed #eee;
+    }
+    .order-info {
+        display: flex;
+        gap: 30px;
+    }
+    .order-info div {
+        display: flex;
+        flex-direction: column;
+    }
+    .order-info label {
+        font-size: 0.8rem;
+        color: var(--gray);
+        font-weight: 500;
+        text-transform: uppercase;
+        margin-bottom: 3px;
+    }
+    .order-info span {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--dark);
+    }    
+    .order-status {
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-align: center;
+        width: 120px; 
+    }
+    .status-delivered {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    .status-shipped {
+        background-color: #ffeeb3;
+        color: #856404;
+    }
+    .status-processing {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+    .order-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        padding-top: 10px;
+    }
+    .order-actions .btn {
+        padding: 8px 15px;
+        font-size: 0.85rem;
+    }
+    .btn-secondary {
+        background-color: transparent;
+        color: var(--primary);
+        border: 1px solid var(--accent-pink);
+        box-shadow: none;
+    }
+    .btn-secondary:hover {
+        background-color: var(--accent-pink);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    /* Order Items Section */
+    .order-items {
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px dashed #eee;
+    }
+    .order-items h4 {
+        margin-bottom: 15px;
+        color: var(--dark);
+    }
+    .order-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+    }
+    .item-image {
+        width: 60px;
+        height: 60px;
+        border-radius: 8px;
+        background-color: #e0e0e0;
+        margin-right: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--gray);
+    }
+    .item-details {
+        flex-grow: 1;
+    }
+    .item-name {
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+    .item-price {
+        color: var(--gray);
+        font-size: 0.9rem;
+    }
+    .item-quantity {
+        color: var(--gray);
+        font-size: 0.9rem;
+    }
+    .item-total {
+        font-weight: 600;
+        margin-left: 15px;
+    }
+
+    /* Payment Method */
+    .payment-method {
+        margin-top: 10px;
+        padding: 8px 12px;
+        background-color: #f0f0f0;
+        border-radius: 6px;
+        display: inline-block;
+        font-size: 0.85rem;
+    }
+
+    /* Message for No Orders */
+    .no-orders-message {
+        text-align: center;
+        padding: 50px;
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        margin-top: 30px;
+    }
+    .no-orders-message i {
+        font-size: 3rem;
+        color: var(--accent-pink);
+        margin-bottom: 15px;
+    }
+    .no-orders-message p {
+        font-size: 1.1rem;
+        color: var(--gray);
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--dark);
+      color: white;
+      padding: 60px 0 20px;
+    }
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    .footer-column h3 {
+      font-size: 20px;
+      margin-bottom: 25px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    .footer-column h3:after {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 3px;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      bottom: 0;
+      left: 0;
+    }
+    .footer-links {
+      list-style: none;
+    }
+    .footer-links li {
+      margin-bottom: 12px;
+    }
+    .footer-links a {
+      transition: all 0.3s ease;
+      color: #b3b3b3;
+    }
+    .footer-links a:hover {
+      color: white;
+      padding-left: 5px;
+    }
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+    .social-links a:hover {
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      transform: translateY(-5px);
+    }
+    .footer-bottom {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: #b3b3b3;
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+        .order-summary {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .order-info {
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        .order-info div {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        .order-status {
+            width: auto;
+            margin-top: 10px;
+            align-self: flex-start;
+        }
+        .order-actions {
+            justify-content: space-around;
+        }        
+        .orders-header {
+            padding: 60px 0 30px;
+        }
+        .orders-header h1 {
+            font-size: 2rem;
+        }        
+        .order-item {
+            flex-direction: column;
+            align-items: flex-start;
+        }        
+        .item-image {
+            margin-bottom: 10px;
+        }
+        .item-total {
+            margin-left: 0;
+            margin-top: 5px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .orders-header {
+            padding: 50px 0 20px;
+        }
+        .orders-header h1 {
+            font-size: 1.8rem;
+        }
+        .order-card {
+            padding: 15px;
+        }
+        .order-actions {
+            flex-direction: column;
+            gap: 8px;
+        }
+        .order-actions .btn {
+            width: 100%;
+            text-align: center;
+        }        
+        .order-info {
+            gap: 10px;
+        }        
+        .order-info div {
+            flex: 1;
+        }
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar-placeholder"></div>
+
+  <header class="orders-header">
+    <div class="container">
+      <h1>Your Order History</h1>
+      <p>View and manage the status of all your LookBook purchases.</p>
+    </div>
+  </header>
+
+  <section class="orders-list-section">
+    <div class="container">
+      <div id="orders-list">
+        <!-- Orders will be dynamically inserted here -->
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>LookBook</h3>
+                    <p>Redefining fashion with style and elegance. Discover your unique look with our exclusive collections.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="homepage.html">Home</a></li>
+                        <li><a href="aboutus.html">About Us</a></li>
+                        <li><a href="men.html">Collections</a></li>
+                        <li><a href="women.html">New Arrivals</a></li>
+                        <li><a href="#">Sale</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul class="footer-links">
+                        <li><a href="help.html">Contact Us</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                        <li><a href="credentials.html">FAQs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> Punjab, India</li>
+                        <li><i class="fas fa-phone"></i> +91 XXXXXXXX85</li>
+                        <li><i class="fas fa-envelope"></i> info@lookbook.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 LookBook. All rights reserved.</p>
+            </div>
+        </div>
+  </footer>
+  
+  <script>
+    // Helper functions (same as your cart.js)
+    function getItems(key) {
+        const items = localStorage.getItem(key);
+        return items ? JSON.parse(items) : [];
+    }
+
+    function formatPrice(amount) {
+        return '₹' + amount.toFixed(0);
+    }
+
+    // Dynamically load navbar.html into the placeholder
+    fetch("/navbar.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("navbar-placeholder").innerHTML = data;
+
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(data, 'text/html');
+        const scriptElement = doc.querySelector('script');
+
+        if (scriptElement) {
+          const newScript = document.createElement('script');
+          newScript.textContent = scriptElement.textContent;
+          document.body.appendChild(newScript);
+        }
+      });
+
+    // Enhanced Render Orders Function
+    function renderOrders(orders) {
+        const ordersListElement = document.getElementById('orders-list');
+        
+        console.log('Orders data received:', orders);
+        
+        // Ensure orders is an array
+        if (!Array.isArray(orders)) {
+            orders = [];
+        }
+
+        let ordersHtml = '';
+        
+        if (orders.length === 0) {
+            ordersHtml = `
+                <div class="no-orders-message">
+                    <i class="fas fa-box-open"></i>
+                    <h2>No orders found</h2>
+                    <p>It looks like you haven't placed any orders yet. Start shopping now!</p>
+                    <a href="homepage1.html" class="btn btn-primary" style="margin-top: 20px;">
+                        🛒Start Shopping
+                    </a>
+                </div>
+            `;
+        } else {
+            orders.forEach(order => {
+                console.log('Processing order:', order);
+                
+                // Validate order data
+                if (!order || typeof order !== 'object') {
+                    console.warn('Invalid order data:', order);
+                    return;
+                }
+                
+                // Use the saved totals from order object
+                const subtotal = parseFloat(order.subtotal) || 0;
+                const tax = parseFloat(order.tax) || 0;
+                const total = parseFloat(order.total) || 0;
+                const itemCount = parseInt(order.itemCount) || (order.items ? order.items.length : 0);
+                const orderId = order.id || 'Unknown ID';
+                const orderDate = order.date || 'Unknown Date';
+                const status = order.status || 'Processing';
+                const paymentMethod = order.paymentMethod || 'Cash on Delivery';
+
+                // Determine the CSS class based on status
+                let statusClass = 'status-processing';
+                if (status === 'Delivered') {
+                    statusClass = 'status-delivered';
+                } else if (status === 'Shipped') {
+                    statusClass = 'status-shipped';
+                } else if (status === 'Processing') {
+                    statusClass = 'status-processing';
+                }
+                
+                // Generate items HTML
+                let itemsHtml = '';
+                if (order.items && Array.isArray(order.items) && order.items.length > 0) {
+                    itemsHtml = '<div class="order-items"><h4>Order Items:</h4>';
+                    order.items.forEach(item => {
+                        const itemPrice = parseFloat(item.price) || 0;
+                        const itemQuantity = parseInt(item.quantity) || 1;
+                        const itemTotal = itemPrice * itemQuantity;
+                        
+                        itemsHtml += `
+                            <div class="order-item">
+                                <div class="item-image">
+                                    <i class="fas fa-tshirt"></i>
+                                </div>
+                                <div class="item-details">
+                                    <div class="item-name">${item.name || 'Unknown Item'}</div>
+                                    <div class="item-price">${formatPrice(itemPrice)} each</div>
+                                </div>
+                                <div class="item-quantity">Qty: ${itemQuantity}</div>
+                                <div class="item-total">${formatPrice(itemTotal)}</div>
+                            </div>
+                        `;
+                    });
+                    itemsHtml += '</div>';
+                }
+                
+                ordersHtml += `
+                    <div class="order-card">
+                        <div class="order-summary">
+                            <div class="order-info">
+                                <div>
+                                    <label>Order ID</label>
+                                    <span>${orderId}</span>
+                                </div>
+                                <div>
+                                    <label>Order Date</label>
+                                    <span>${orderDate}</span>
+                                </div>
+                                <div>
+                                    <label>Total</label>
+                                    <span>${formatPrice(total)}</span>
+                                </div>
+                                <div>
+                                    <label>Items</label>
+                                    <span>${itemCount}</span>
+                                </div>
+                            </div>
+                            <div class="order-status ${statusClass}">
+                                ${status}
+                            </div>
+                        </div>
+                        ${itemsHtml}
+                        <div class="payment-method">
+                            <i class="fas fa-credit-card"></i> Payment Method: ${paymentMethod}
+                        </div>
+                        <div class="order-actions">
+                            <a href="#" class="btn btn-secondary">View Details</a>
+                            <a href="#" class="btn btn-primary">
+                                ${status === 'Delivered' ? 'Reorder' : 'Track Order'}
+                            </a>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        ordersListElement.innerHTML = ordersHtml;
+    }
+
+    // Enhanced Initial Load with better error handling
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM loaded, checking for orders...');
+        
+        // Use the getItems function to get orders
+        const userOrders = getItems('userOrders');
+        console.log('Parsed userOrders:', userOrders);
+        
+        // Render the orders
+        renderOrders(userOrders);
+    });
+  </script>
+</body>
+</html>
