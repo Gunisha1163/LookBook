@@ -12,7 +12,7 @@ app.use(express.json());
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
 app.use("/cart", cartRoutes);
-
+app.use("/wishlist",wishlistRoutes);
 // Serve static files
 app.use(express.static(path.join(__dirname, "../Front-end")));
 app.use("/css", express.static(path.join(__dirname, "../Front-end/css")));
@@ -31,5 +31,6 @@ app.listen(3000, () => {
   console.log(`Server running on port 3000`);
 
 });
+
 
 
