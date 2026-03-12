@@ -4,7 +4,7 @@ const path = require("path");
 const productRoutes = require("./routes/productRoutes");
 const userRoutes = require("./routes/userRoutes");
 const cartRoutes = require("./routes/cartRoutes");
-
+const wishlistRoutes = require("./routes/wishlistRoutes");
 const app = express();
 app.use(express.json());
 
@@ -31,4 +31,5 @@ app.listen(3000, () => {
   console.log(`Server running on port 3000`);
 
 });
+
 
