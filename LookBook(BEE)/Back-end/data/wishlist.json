@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1773219716796,
+    "name": "Slim Fit Jeans",
+    "price": "₹1300",
+    "image": "https://i.pinimg.com/1200x/cd/08/c5/cd08c5c4b5b752e6f953238932966e65.jpg"
+  },
+  {
+    "id": 1773219722980,
+    "name": "Hoodie",
+    "price": "₹1200",
+    "image": "https://i.pinimg.com/1200x/b3/56/6c/b3566c327d7e64bbda1896959b040a4e.jpg"
+  },
+  {
+    "id": 1773219737738,
+    "name": "Full Set",
+    "price": "₹2200",
+    "image": "https://i.pinimg.com/1200x/a8/5a/bd/a85abd5ac2bdad796cdc4118cf91cdfa.jpg"
+  }
+]
