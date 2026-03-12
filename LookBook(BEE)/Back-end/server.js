@@ -3,7 +3,7 @@ const path = require("path");
 
 const productRoutes = require("./routes/productRoutes");
 const userRoutes = require("./routes/userRoutes");
-
+const cartRoutes = require("./routes/cartRoutes");
 
 const app = express();
 app.use(express.json());
@@ -11,6 +11,7 @@ app.use(express.json());
 // Routes
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
+app.use("/cart", cartRoutes);
 
 // Serve static files
 app.use(express.static(path.join(__dirname, "../Front-end")));
@@ -30,3 +31,4 @@ app.listen(3000, () => {
   console.log(`Server running on port 3000`);
 
 });
+
