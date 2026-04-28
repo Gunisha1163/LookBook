@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fashion Profile Page</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      text-decoration: none;
+    }
+    body {
+      background: #fffafc;
+      min-height: 100vh;
+      color: #333;
+    }
+    .container {
+      width: 90%;
+      max-width: 950px;
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 6px 25px rgba(255, 182, 193, 0.2);
+      padding: 40px;
+      transition: 0.3s ease;
+      margin: 40px auto; 
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .header h1 {
+      font-size: 28px;
+      font-weight: 600;
+      color: #2b1b1b;
+    }
+    .header p {
+      color: #777;
+      font-size: 14px;
+    }
+    .profile-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+    .profile-pic {
+      position: relative;
+      width: 150px;
+      height: 150px;
+    }
+    .profile-pic img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 4px solid #f9d1d5;
+      object-fit: cover;
+    }
+    .profile-pic .edit-btn {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      background: #f28ca0;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      font-size: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .profile-name {
+      text-align: center;
+    }
+    .profile-name h2 {
+      font-size: 22px;
+      color: #333;
+    }
+    .profile-name p {
+      font-size: 14px;
+      color: #888;
+    }
+    .edit-toggle {
+      text-align: right;
+      margin-bottom: 10px;
+    }
+    .edit-toggle button {
+      background: #f28ca0;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+    .edit-toggle button:hover {
+      background: #e67288;
+    }
+
+    /* Info Section */
+    .info-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 20px;
+      background: #fff6f7;
+      border-radius: 16px;
+      padding: 25px;
+    }
+    .info-card {
+      flex: 1;
+      min-width: 280px;
+    }
+    .info-card h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #2b1b1b;
+    }
+    .info-item {
+      margin-bottom: 12px;
+    }
+    .info-item label {
+      font-weight: 500;
+      color: #444;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .info-item span,
+    .info-item input {
+      font-size: 14px;
+      color: #555;
+    }
+    input {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #f2c1c7;
+      border-radius: 8px;
+      outline: none;
+      display: none;
+      background: #fff;
+    }
+    input:focus {
+      border-color: #f28ca0;
+    }
+
+    /* Social Section */
+    .social-section {
+      text-align: center;
+      margin-top: 40px;
+    }
+    .social-section h3 {
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: #2b1b1b;
+    }
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+    .social-icons a {
+      text-decoration: none;
+      font-size: 22px;
+      color: #fff;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+    .social-icons .yt { background: #ff0000; }
+    .social-icons .ig { background: #e1306c; }
+    .social-icons .tt { background: #000; }
+
+    .social-icons a:hover {
+      opacity: 0.8;
+      transform: scale(1.1);
+    }
+
+    /* ==================== MEDIA QUERIES ==================== */
+
+    /* Tablet Devices (768px and below) */
+    @media screen and (max-width: 768px) {
+      .container {
+        padding: 30px;
+        margin: 30px auto;
+      }
+      
+      .header h1 {
+        font-size: 24px;
+      }
+      
+      .profile-pic {
+        width: 120px;
+        height: 120px;
+      }
+      
+      .profile-name h2 {
+        font-size: 20px;
+      }
+      
+      .info-section {
+        flex-direction: column;
+        padding: 20px;
+        gap: 15px;
+      }
+      
+      .info-card {
+        min-width: 100%;
+      }
+      
+      .social-section {
+        margin-top: 30px;
+      }
+    }
+
+    /* Mobile Devices (480px and below) */
+    @media screen and (max-width: 480px) {
+      .container {
+        padding: 20px;
+        margin: 20px auto;
+        width: 95%;
+      }
+      
+      .header {
+        margin-bottom: 30px;
+      }
+      
+      .header h1 {
+        font-size: 22px;
+      }
+      
+      .header p {
+        font-size: 13px;
+      }
+      
+      .profile-pic {
+        width: 100px;
+        height: 100px;
+      }
+      
+      .profile-pic .edit-btn {
+        width: 25px;
+        height: 25px;
+        font-size: 14px;
+      }
+      
+      .profile-name h2 {
+        font-size: 18px;
+      }
+      
+      .profile-name p {
+        font-size: 13px;
+      }
+      
+      .edit-toggle button {
+        padding: 6px 12px;
+        font-size: 13px;
+        width: 100%;
+      }
+      
+      .info-section {
+        padding: 15px;
+        gap: 10px;
+      }
+      
+      .info-card h3 {
+        font-size: 16px;
+      }
+      
+      .info-item label {
+        font-size: 13px;
+      }
+      
+      .info-item span,
+      .info-item input {
+        font-size: 13px;
+      }
+      
+      input {
+        padding: 6px 8px;
+      }
+      
+      .social-section {
+        margin-top: 25px;
+      }
+      
+      .social-section h3 {
+        font-size: 16px;
+      }
+      
+      .social-icons a {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar-placeholder"></div>
+
+  <div class="container">
+    <div class="header">
+      <h1>Profile</h1>
+      <p>Manage and edit your fashion profile</p>
+    </div>
+
+    <div class="profile-section">
+      <div class="profile-pic">
+        <img id="profileImg" src="Gunisha.jpeg" alt="Profile Picture">
+        <button class="edit-btn" onclick="changeProfile()">✎</button>
+      </div>
+      <div class="profile-name">
+        <h2 id="userName">Loading...</h2>
+        <p id="userRole">Loading...</p>
+      </div>
+    </div>
+
+    <div class="edit-toggle">
+      <button id="editBtn" onclick="toggleEdit()">Edit Profile</button>
+    </div>
+
+    <div class="info-section">
+      <div class="info-card">
+        <h3>Personal Information</h3>
+        <div class="info-item">
+          <label>Name</label>
+          <span id="nameText">Loading...</span>
+          <input type="text" id="nameInput" placeholder="Enter your name">
+        </div>
+        <div class="info-item">
+          <label>Age</label>
+          <span id="ageText">Loading...</span>
+          <input type="number" id="ageInput" placeholder="Enter your age">
+        </div>
+        <div class="info-item">
+          <label>Gender</label>
+          <span id="genderText">Loading...</span>
+          <input type="text" id="genderInput" placeholder="Enter your gender">
+        </div>
+        <div class="info-item">
+          <label>Style</label>
+          <span id="styleText">Loading...</span>
+          <input type="text" id="styleInput" placeholder="Enter your style">
+        </div>
+        <div class="info-item">
+          <label>Fashion Interest</label>
+          <span id="interestText">Loading...</span>
+          <input type="text" id="interestInput" placeholder="Enter your interests">
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h3>Contact & Location</h3>
+        <div class="info-item">
+          <label>Email</label>
+          <span id="emailText">Loading...</span>
+          <input type="email" id="emailInput" placeholder="Enter your email">
+        </div>
+        <div class="info-item">
+          <label>Address</label>
+          <span id="addressText">Loading...</span>
+          <input type="text" id="addressInput" placeholder="Enter your address">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Store profile image URL globally to sync with navbar
+    let currentProfileImage = "https://i.pravatar.cc/300?img=5";
+    let editMode = false;
+
+    // FUNCTION TO LOAD DATA FROM credentials.html FORM
+    function loadProfileData() {
+        const userData = localStorage.getItem("surveyUser");
+        
+        // Set default "Loading..." state
+        resetToLoadingState();
+        
+        if (userData) {
+            const user = JSON.parse(userData);
+
+            // Update Name in Header and Info Card
+            const fullName = `${user.firstName || ''} ${user.lastName || ''}`.trim();
+            if (fullName) {
+                document.getElementById('userName').textContent = fullName;
+                document.getElementById('nameText').textContent = fullName;
+                document.getElementById('nameInput').value = fullName;
+            } else {
+                setDefaultValues();
+            }
+
+            // Update other fields only if they exist
+            updateFieldIfExists('ageText', 'ageInput', user.age);
+            updateFieldIfExists('genderText', 'genderInput', user.gender);
+            updateFieldIfExists('styleText', 'styleInput', user.style);
+            updateFieldIfExists('interestText', 'interestInput', user.interests);
+            
+            // Try to load email from userSession if surveyUser doesn't have it
+            let email = user.email;
+            if (!email) {
+                const sessionData = localStorage.getItem("userData");
+                if (sessionData) {
+                    email = JSON.parse(sessionData).email;
+                }
+            }
+            updateFieldIfExists('emailText', 'emailInput', email);
+            updateFieldIfExists('addressText', 'addressInput', user.Address);
+
+            // Update role to reflect new data
+            document.getElementById('userRole').textContent = fullName ? 'Fashion Enthusiast' : 'Please complete your profile';
+
+            // Update navbar profile image if it exists
+            updateNavbarProfileImage();
+        } else {
+            setDefaultValues();
+        }
+    }
+
+    function resetToLoadingState() {
+        const fields = ['userName', 'userRole', 'nameText', 'ageText', 'genderText', 'styleText', 'interestText', 'emailText', 'addressText'];
+        fields.forEach(field => {
+            const element = document.getElementById(field);
+            if (element) {
+                element.textContent = 'Loading...';
+            }
+        });
+    }
+
+    function setDefaultValues() {
+        document.getElementById('userName').textContent = 'Please complete your profile';
+        document.getElementById('userRole').textContent = 'Click Edit Profile to get started';
+        
+        const defaultTexts = {
+            'nameText': 'Not set', 'ageText': 'Not set', 'genderText': 'Not set',
+            'styleText': 'Not set', 'interestText': 'Not set', 'emailText': 'Not set',
+            'addressText': 'Not set'
+        };
+        
+        Object.keys(defaultTexts).forEach(field => {
+            const element = document.getElementById(field);
+            const inputElement = document.getElementById(field.replace('Text', 'Input'));
+            if (element) element.textContent = defaultTexts[field];
+            if (inputElement) inputElement.value = '';
+        });
+    }
+
+    function updateFieldIfExists(textId, inputId, value) {
+        const textElement = document.getElementById(textId);
+        const inputElement = document.getElementById(inputId);
+        
+        if (value && value !== 'N/A') {
+            textElement.textContent = value;
+            inputElement.value = value;
+        } else {
+            textElement.textContent = 'Not set';
+            inputElement.value = '';
+        }
+    }
+
+    function updateNavbarProfileImage() {
+        // Update the profile image in navbar if it exists
+        const navbarUserIcon = document.querySelector('.user-icon');
+        if (navbarUserIcon && currentProfileImage !== "https://i.pravatar.cc/300?img=5") {
+            // Replace the text icon with an image
+            navbarUserIcon.innerHTML = `<img src="${currentProfileImage}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;" alt="Profile">`;
+        }
+    }
+
+    function changeProfile() {
+      const url = prompt("Enter new profile image URL:");
+      if (url) {
+        currentProfileImage = url;
+        document.getElementById('profileImg').src = url;
+        
+        // Update navbar profile image
+        updateNavbarProfileImage();
+        
+        // Save to localStorage
+        const userData = localStorage.getItem("surveyUser");
+        if (userData) {
+            const user = JSON.parse(userData);
+            user.profileImage = url;
+            localStorage.setItem("surveyUser", JSON.stringify(user));
+        }
+      }
+    }
+
+    function toggleEdit() {
+      editMode = !editMode;
+      const btn = document.getElementById('editBtn');
+      btn.textContent = editMode ? "Save Changes" : "Edit Profile";
+      const fields = [
+        'name', 'age', 'gender', 'style', 'interest', 'email', 'address'
+      ];
+      fields.forEach(field => {
+        const text = document.getElementById(field + "Text");
+        const input = document.getElementById(field + "Input");
+        if (editMode) {
+          text.style.display = "none";
+          input.style.display = "block";
+        } else {
+          // Save changes when exiting edit mode
+          text.textContent = input.value || 'Not set';
+          text.style.display = "inline";
+          input.style.display = "none";
+          
+          // Update localStorage
+          saveProfileChanges();
+        }
+      });
+      if (!editMode) {
+        alert("Profile updated successfully!");
+      }
+    }
+
+    function saveProfileChanges() {
+        const userData = localStorage.getItem("surveyUser");
+        let user = userData ? JSON.parse(userData) : {};
+        
+        // Update user data with new values
+        user.firstName = document.getElementById('nameInput').value.split(' ')[0] || '';
+        user.lastName = document.getElementById('nameInput').value.split(' ').slice(1).join(' ') || '';
+        user.age = document.getElementById('ageInput').value || '';
+        user.gender = document.getElementById('genderInput').value || '';
+        user.style = document.getElementById('styleInput').value || '';
+        user.interests = document.getElementById('interestInput').value || '';
+        user.Address = document.getElementById('addressInput').value || '';
+        user.profileImage = currentProfileImage;
+        
+        localStorage.setItem("surveyUser", JSON.stringify(user));
+        
+        // Update displayed name
+        const fullName = `${user.firstName} ${user.lastName}`.trim();
+        if (fullName) {
+            document.getElementById('userName').textContent = fullName;
+        }
+    }
+
+    // Load profile data when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        // Load navbar first
+        fetch("navBar.html")
+          .then(response => response.text())
+          .then(data => {
+            document.getElementById("navbar-placeholder").innerHTML = data;
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, 'text/html');
+            const scriptElement = doc.querySelector('script');
+            if (scriptElement) {
+              const newScript = document.createElement('script');
+              newScript.textContent = scriptElement.textContent;
+              document.body.appendChild(newScript);
+            }
+            
+            // Then load profile data
+            setTimeout(loadProfileData, 100);
+          })
+          .catch(error => {
+            console.error('Error loading navbar:', error);
+            loadProfileData(); // Still load profile data even if navbar fails
+          });
+    });
+  </script>
+</body>
+</html>

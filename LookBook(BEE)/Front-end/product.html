@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .heart {
+      font-size: 28px;
+      color: grey;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      user-select: none;
+    }
+    .heart.active {
+      color: red;
+    }
+    .item-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-top: 15px;
+    }
+    .cart-btn {
+      background-color: #f3c6c0;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      font-size: 14px;
+    }
+    .cart-btn:hover {
+      background-color: #eaa9a0;
+      transform: scale(1.05);
+    }
+    .price {
+      font-weight: bold;
+      color: #5c4638;
+      font-size: 1.1rem;
+      margin: 10px 0;
+      text-align: center;
+      width: 100%;
+    }
+    .item-card h4 {
+      text-align: center;
+      width: 100%;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar-placeholder"></div>
+  
+  <div class="header1">
+    <h1 id="outfitTitle">Outfit</h1>
+  </div>
+
+  <div class="outfit-detail">
+    <!-- LEFT SIDE: Main Outfit Image -->
+    <div class="main-img">
+      <img id="mainImage">
+    </div>
+
+    <!-- RIGHT SIDE: Grid of Items -->
+    <div class="items-grid" id="itemsContainer"></div>
+  </div>
+
+  <script src="/js/script.js"></script>
+  <script src="/js/product.js"></script>
+</body>
+</html>

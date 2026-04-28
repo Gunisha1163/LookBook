@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Wishlist</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: #fdfaf6;
+      color: #4b3f35;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 32px;
+      color: #2b1b1b;
+    }
+    .table-container {
+      padding: 40px 50px;
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    th, td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+    th {
+      background-color: #f3c6c0;
+      color: #fff;
+      font-weight: 600;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    button.remove-btn {
+      background-color: #f59b91;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 500;
+      color: white;
+    }
+    button.remove-btn:hover {
+      background-color: #e5736d;
+      transform: scale(1.05);
+    }
+    td img {
+      width: 80px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .empty-wishlist {
+      text-align: center;
+      padding: 60px 20px;
+      color: #888;
+      font-size: 18px;
+    }
+    .empty-wishlist i {
+      font-size: 48px;
+      margin-bottom: 20px;
+      color: #f3c6c0;
+    }
+    /* MEDIA QUERIES */
+    @media screen and (max-width: 768px) {
+      .table-container {
+        padding: 30px 20px;
+      }      
+      h1 {
+        font-size: 28px;
+        margin-bottom: 25px;
+      }      
+      table {
+        margin-bottom: 20px;
+        font-size: 14px;
+      }      
+      th, td {
+        padding: 10px 8px;
+      }      
+      td img {
+        width: 60px;
+        height: 80px;
+      }      
+      button.remove-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+      }      
+      .empty-wishlist {
+        padding: 40px 20px;
+        font-size: 16px;
+      }      
+      .empty-wishlist i {
+        font-size: 36px;
+      }
+    }
+    @media screen and (max-width: 480px) {
+      .table-container {
+        padding: 20px 15px;
+      }      
+      h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+      }      
+      table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        margin-bottom: 15px;
+        font-size: 13px;
+      }      
+      th, td {
+        padding: 8px 6px;
+        min-width: 80px;
+      }      
+      th:nth-child(1), td:nth-child(1) { min-width: 70px; } 
+      th:nth-child(2), td:nth-child(2) { min-width: 120px; } 
+      th:nth-child(3), td:nth-child(3) { min-width: 80px; } 
+      th:nth-child(4), td:nth-child(4) { min-width: 90px; } 
+      td img {
+        width: 50px;
+        height: 65px;
+      }      
+      button.remove-btn {
+        padding: 5px 8px;
+        font-size: 11px;
+        width: 100%;
+      }      
+      .empty-wishlist {
+        padding: 30px 15px;
+        font-size: 14px;
+      }      
+      .empty-wishlist i {
+        font-size: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar-placeholder"></div>
+  <div class="table-container">
+    <h1>Your Wishlist</h1>
+    <table id="wishlistTable">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody id="wishlist-table-body">
+        <!-- Wishlist items will be dynamically inserted here -->
+      </tbody>
+    </table>
+    <div id="emptyWishlistMessage" class="empty-wishlist" style="display: none;">
+      <i class="fas fa-heart"></i>
+      <p>Your wishlist is empty</p>
+      <p style="font-size: 14px; margin-top: 10px;">Start adding items you love!</p>
+    </div>
+  </div>
+  <script>
+    // Load navbar
+    fetch("/navbar.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("navbar-placeholder").innerHTML = data;
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(data, 'text/html');
+        const scriptElement = doc.querySelector('script');
+        if (scriptElement) {
+          const newScript = document.createElement('script');
+          newScript.textContent = scriptElement.textContent;
+          document.body.appendChild(newScript);
+        }
+      });
+
+    // Load wishlist items from backend
+    async function loadWishlistItems() {
+      console.log('Loading wishlist items...'); // Debug log
+      
+      try {
+        const response = await fetch('/wishlist');
+        console.log('Response status:', response.status); // Debug log
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch wishlist');
+        }
+        
+        const wishlistItems = await response.json();
+        console.log('Wishlist items:', wishlistItems); // Debug log
+        
+        const tableBody = document.getElementById("wishlist-table-body");
+        const emptyMessage = document.getElementById("emptyWishlistMessage");
+        const table = document.getElementById("wishlistTable");
+        
+        if (wishlistItems.length === 0) {
+          table.style.display = "none";
+          emptyMessage.style.display = "block";
+          return;
+        }
+        
+        table.style.display = "table";
+        emptyMessage.style.display = "none";
+        tableBody.innerHTML = "";      
+        
+        wishlistItems.forEach(item => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td><img src="${item.image}" alt="${item.name}"></td>
+            <td>${item.name}</td>
+            <td>${item.price}</td>
+            <td>
+              <button class="remove-btn" onclick="removeFromWishlist(${item.id})">
+                Remove
+              </button>
+            </td>
+          `;
+          tableBody.appendChild(row);
+        });
+      } catch (error) {
+        console.error('Error loading wishlist:', error);
+      }
+    }
+
+    async function removeFromWishlist(id) {
+      console.log('Removing item with id:', id); // Debug log
+      
+      try {
+        const response = await fetch(`/wishlist/${id}`, {
+          method: 'DELETE',
+        });
+        
+        console.log('Delete response:', response.status); // Debug log
+        
+        if (response.ok) {
+          loadWishlistItems(); // Reload the wishlist
+        } else {
+          alert('Failed to remove item');
+        }
+      } catch (error) {
+        console.error('Error removing item:', error);
+        alert('Error removing item');
+      }
+    }
+
+    // Load wishlist when page loads
+    document.addEventListener('DOMContentLoaded', loadWishlistItems);
+  </script>
+</body>
+</html>
